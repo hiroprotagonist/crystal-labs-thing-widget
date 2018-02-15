@@ -1,3 +1,4 @@
 # crystal-labs-thing-widget
 crystal-labs-thing-widget
-V1
+V2
+tags
