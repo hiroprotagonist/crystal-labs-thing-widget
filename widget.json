@@ -1,0 +1,15 @@
+{
+    "name": "chrystal-labs-thing-widget",
+    "version": "0.0.2",
+    "description": "Describe thing-widget here",
+    "preview": "bower_components/thing-widget/assets/preview.png",
+    "author": "Stefan Gebhardt <stefan.gebhardt@abas.de>",
+    "label": "thing-widget: Label for the Widget Shop",
+    "path": "bower_components/thing-widget/thing-widget.html",
+    "attr": {
+        "greeting": "thing-widget says 'Hello!'"
+    },
+    "title": "chrystal-labs-thing-widget",
+    "width": 3,
+    "height": 3
+}

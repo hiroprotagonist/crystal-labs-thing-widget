@@ -1,0 +1,93 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../aba-widget/aba-widget.html">
+<link rel="import" href="../abas-widget-behavior/abas-widget-behavior.html">
+<link rel="import" href="../abas-styles/abas-styles.html">
+<link rel="import" href="../abas-config/abas-config-meta.html">
+<link rel="import" href="../auth0-authenticator/auth0-fetch.html">
+
+<dom-module id="thing-widget">
+    <template>
+        <abas-config-meta data="{{configuration}}"></abas-config-meta>
+        
+        <custom-style>
+            <style is="custom-style">
+                :host {
+                    display: block;
+                    background: var(--abas-black-800);
+                }
+
+                [slot="content"] {
+                    height: 100%;
+                    padding: 20px;
+                }
+            </style>
+        </custom-style>
+        <aba-widget>
+            <div slot="content">
+                <!-- Widget content goes here! -->
+                <h3>[[greeting]]</h3>
+            </div>
+            <div slot="settingsForm">
+                <!-- Widget settings goes here! -->
+            </div>
+            <div slot="optionsMenu">
+                <!-- Additonal settings menu items -->
+            </div>
+        </aba-widget>
+    </template>
+    
+    <script type="application/javascript" src="../lodash/dist/lodash.min.js"></script>
+    
+    <script>
+        class ThingWidget extends ABAS.WidgetBehavior(Polymer.Element) {
+            static get is() { return 'thing-widget' }
+            static get properties() {
+                return {
+                    greeting: {type: String},
+                    customers: { type: Array }
+                    
+                    
+                };
+            }
+            
+            
+            fetchCustomers() {
+                // Example request to the middleware
+                const tenant = 'erp';
+                const _baseURL = `${this.configuration.api.erpBaseURL}/mw/r/${tenant}`;
+                
+                let headers = new Headers();
+                headers.set('accept', 'application/abas.objects+json');
+                
+                auth0Fetch(`${_baseURL}/obj/data/0:1`, {
+                    headers: headers
+                }).then((resp) => {
+                    if(resp.status === 200) {
+                        return resp.json();
+                    }
+                    throw new Error(`This ain't work. Requesting middleware failed.`)
+                }).then((mwResponse) => {
+                    let customers = _.get(mwResponse, 'content.data.erpDataObjects');
+                    if (!customers) {
+                        console.log('middleware response is not as expected');
+                        return
+                    }
+                    let _customers = customers.map( (customer) => {
+                        // simplify access to the result
+                        // the field object consists of value and text
+                        return {
+                            id: _.get(customer, 'head.fields.id'),
+                            nummer: _.get(customer, 'head.fields.nummer'),
+                            such: _.get(customer, 'head.fields.such'),
+                            sucherw: _.get(customer, 'head.fields.sucherw'),
+                        }
+                    });
+                    
+                    this.set('customers', _customers)
+                })
+            }
+            
+        }
+        customElements.define(ThingWidget.is, ThingWidget);
+    </script>
+</dom-module>

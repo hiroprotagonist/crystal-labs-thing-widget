@@ -1,0 +1,30 @@
+{
+	"name": "crystal-labs-thing-widget",
+	"authors": [
+		"Stefan Gebhardt stefan.gebhardt@abas.de"
+	],
+	"description": "Describe your widget",
+	"main": "crystal-labs-thing-widget.html",
+	"license": "MIT",
+	"homepage": "http://www.abas-software.com",
+	"private": true,
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests"
+	],
+	"dependencies": {
+		"polymer": "Polymer/polymer",
+		"abas-widget-behavior": "git@bitbucket.org:abascloud/abas-widget-behavior.git",
+		"aba-widget": "git@bitbucket.org:abascloud/aba-widget.git",
+		"abas-styles": "git@bitbucket.org:abascloud/abas-styles.git",
+		"auth0-authenticator": "git@bitbucket.org:abascloud/auth0-authenticator.git",
+		"abas-config": "git@bitbucket.org:abascloud/abas-config.git",
+		"lodash": "^4.17.4"
+	},
+	"resolutions": {
+		"lodash": "^4.17.4"
+	}
+}
